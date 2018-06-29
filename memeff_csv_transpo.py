@@ -22,18 +22,21 @@ print("Length calculated")
 readOffset=[0 for i in range(num_lines)]
 #Function that determine how much characters our data take 
 def determineChunk(i):
+
 	readFile.seek(CumulineLength[i]+readOffset[i])
 	chunk=1
 	ch=readFile.read(1)
-	while ch!=',' and ch!='\n' and ch!='':
+	while ch!=',' and ch!='\n' and ch!='\r' and ch!='':
 		ch=readFile.read(1)
+		print(ch)
 		chunk+=1
+	# print(chunk)
 	return chunk
 # we iterate verticaly so we can write our file transposed
 for j in range(num_cols):
 	for i in range(num_lines-1):
 		chunk=determineChunk(i)
-		#We move the 
+		#We move the cursor to the place we need
 		readFile.seek(CumulineLength[i]+readOffset[i])
 		writeFile.write(readFile.read(chunk-1)+',')
 		readOffset[i]+=chunk
@@ -41,6 +44,9 @@ for j in range(num_cols):
 	readFile.seek(CumulineLength[num_lines-1]+readOffset[num_lines-1])
 	writeFile.write(readFile.read(chunk-1)+'\n')
 	readOffset[num_lines-1]+=chunk
-readFile.close()
-writeFile.close()
+print(CumulineLength[num_lines-1]+readOffset[num_lines-1])
+print(CumulineLength)
+print(readOffset)
+# readFile.close()
+# writeFile.close()
 print'Execution Time:'+str(time.time()-time1)
