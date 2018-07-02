@@ -1,3 +1,5 @@
+###----- Estimated runtime on personal laptop: 20min per giga. o(n) algorithm. What's limitating is the access time to data
+
 import csv
 import sys
 import time
@@ -22,13 +24,11 @@ print("Length calculated")
 readOffset=[0 for i in range(num_lines)]
 #Function that determine how much characters our data take 
 def determineChunk(i):
-
 	readFile.seek(CumulineLength[i]+readOffset[i])
 	chunk=1
 	ch=readFile.read(1)
 	while ch!=',' and ch!='\n' and ch!='\r' and ch!='':
 		ch=readFile.read(1)
-		print(ch)
 		chunk+=1
 	# print(chunk)
 	return chunk
@@ -44,9 +44,6 @@ for j in range(num_cols):
 	readFile.seek(CumulineLength[num_lines-1]+readOffset[num_lines-1])
 	writeFile.write(readFile.read(chunk-1)+'\n')
 	readOffset[num_lines-1]+=chunk
-print(CumulineLength[num_lines-1]+readOffset[num_lines-1])
-print(CumulineLength)
-print(readOffset)
 # readFile.close()
 # writeFile.close()
 print'Execution Time:'+str(time.time()-time1)
